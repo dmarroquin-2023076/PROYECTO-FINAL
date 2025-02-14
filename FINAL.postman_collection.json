@@ -1,0 +1,362 @@
+{
+	"info": {
+		"_postman_id": "4387de65-c00e-4257-a510-9c9ca9fbcf28",
+		"name": "FINAL",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37956984"
+	},
+	"item": [
+		{
+			"name": "Categoria",
+			"item": [
+				{
+					"name": "Nueva Categoria",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "unika",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "un producto muy bueno ",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:2636/v1/category/save",
+							"host": [
+								"localhost"
+							],
+							"port": "2636",
+							"path": [
+								"v1",
+								"category",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener categoria",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:2636/v1/category/get/67aee72246358414e1949690",
+							"host": [
+								"localhost"
+							],
+							"port": "2636",
+							"path": [
+								"v1",
+								"category",
+								"get",
+								"67aee72246358414e1949690"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener todos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:2636/v1/category/getAll",
+							"host": [
+								"localhost"
+							],
+							"port": "2636",
+							"path": [
+								"v1",
+								"category",
+								"getAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar categoria",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "description",
+									"value": "aaaaa",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:2636/v1/category/67aee72246358414e1949692",
+							"host": [
+								"localhost"
+							],
+							"port": "2636",
+							"path": [
+								"v1",
+								"category",
+								"67aee72246358414e1949692"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Categoria",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:2636/v1/category/67aee72146358414e194968e",
+							"host": [
+								"localhost"
+							],
+							"port": "2636",
+							"path": [
+								"v1",
+								"category",
+								"67aee72146358414e194968e"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Productos",
+			"item": [
+				{
+					"name": "Agregar Producto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Cuna",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Es algo para un bebe",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "1000",
+									"type": "text"
+								},
+								{
+									"key": "stock",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "sales",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "67aee72246358414e1949690",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:2636/v1/product/save",
+							"host": [
+								"localhost"
+							],
+							"port": "2636",
+							"path": [
+								"v1",
+								"product",
+								"save"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Cuna",
+									"disabled": true
+								},
+								{
+									"key": "description",
+									"value": "Es algo para un bebe",
+									"disabled": true
+								},
+								{
+									"key": "price",
+									"value": "1000",
+									"disabled": true
+								},
+								{
+									"key": "stock",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "sales",
+									"value": "0",
+									"disabled": true
+								},
+								{
+									"key": "keeper",
+									"value": "67aee72146358414e194968e",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar productos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:2636/v1/product/get",
+							"host": [
+								"localhost"
+							],
+							"port": "2636",
+							"path": [
+								"v1",
+								"product",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Producto",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:2636/v1/product/get/67af514d35e07edae6f10cf0",
+							"host": [
+								"localhost"
+							],
+							"port": "2636",
+							"path": [
+								"v1",
+								"product",
+								"get",
+								"67af514d35e07edae6f10cf0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Productos",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "a",
+									"type": "text"
+								},
+								{
+									"key": "price ",
+									"value": "1500",
+									"type": "text"
+								},
+								{
+									"key": "stock",
+									"value": "0",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:2636/v1/product/update/67af5210c382a738b6d84b74",
+							"host": [
+								"localhost"
+							],
+							"port": "2636",
+							"path": [
+								"v1",
+								"product",
+								"update",
+								"67af5210c382a738b6d84b74"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Productos Agotados",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:2636/v1/product/stockProduct",
+							"host": [
+								"localhost"
+							],
+							"port": "2636",
+							"path": [
+								"v1",
+								"product",
+								"stockProduct"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Productos más vendido",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:2636/v1/product/bestSellers",
+							"host": [
+								"localhost"
+							],
+							"port": "2636",
+							"path": [
+								"v1",
+								"product",
+								"bestSellers"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
