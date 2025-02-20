@@ -40,7 +40,8 @@ const userSchema = Schema(
             type: String,
             required: [true, 'Role is required'],
             uppercase: true,
-            enum: ['ADMIN', 'CLIENT']
+            enum: ['ADMIN', 'CLIENT'],
+            default: 'CLIENT'
         }
     },
     {

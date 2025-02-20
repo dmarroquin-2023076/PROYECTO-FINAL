@@ -125,48 +125,48 @@ export const updateCategory = async(req, res)=>{
 }
 
 
-export const categoryDelete = async (request, response) => {
-    try {
-        let { id } = request.params;
+// export const categoryDelete = async (request, response) => {
+//     try {
+//         let { id } = request.params;
 
-        // Buscar la categoría que se va a eliminar
-        const categoryToDelete = await Category.findById(id);
-        if (!categoryToDelete) {
-            return response.status(404).send({
-                success: false,
-                message: 'Category not found'
-            });
-        }
+//         // Buscar la categoría que se va a eliminar
+//         const categoryToDelete = await Category.findById(id);
+//         if (!categoryToDelete) {
+//             return response.status(404).send({
+//                 success: false,
+//                 message: 'Category not found'
+//             });
+//         }
 
-        // Definir la categoría predeterminada (asegúrate de que esta categoría exista en tu base de datos)
-        const defaultCategory = await Category.findOne({ name: 'unika' }); // Cambia 'Default Category' por el nombre de tu categoría predeterminada
-        if (!defaultCategory) {
-            return response.status(500).send({
-                success: false,
-                message: 'Default category not found'
-            });
-        }
+//         // Definir la categoría predeterminada (asegúrate de que esta categoría exista en tu base de datos)
+//         const defaultCategory = await Category.findOne({ name: 'unika' }); // Cambia 'Default Category' por el nombre de tu categoría predeterminada
+//         if (!defaultCategory) {
+//             return response.status(500).send({
+//                 success: false,
+//                 message: 'Default category not found'
+//             });
+//         }
 
-        // Actualizar todos los productos que pertenecen a la categoría que se está eliminando
-        await Product.updateMany(
-            { category: id }, // Filtrar productos que pertenecen a la categoría eliminada
-            { category: defaultCategory._id } // Asignar la categoría predeterminada
-        );
+//         // Actualizar todos los productos que pertenecen a la categoría que se está eliminando
+//         await Product.updateMany(
+//             { category: id }, // Filtrar productos que pertenecen a la categoría eliminada
+//             { category: defaultCategory._id } // Asignar la categoría predeterminada
+//         );
 
-        // Eliminar la categoría
-        let deleteCategory = await Category.findByIdAndDelete(id);
+//         // Eliminar la categoría
+//         let deleteCategory = await Category.findByIdAndDelete(id);
         
-        return response.status(200).send({
-            success: true,
-            message: 'Category deleted successfully',
-            deleteCategory
-        });
-    } catch (e) {
-        console.error(e);
-        return response.status(500).send({
-            success: false,
-            message: 'General error',
-            error: e
-        });
-    }
-};
+//         return response.status(200).send({
+//             success: true,
+//             message: 'Category deleted successfully',
+//             deleteCategory
+//         });
+//     } catch (e) {
+//         console.error(e);
+//         return response.status(500).send({
+//             success: false,
+//             message: 'General error',
+//             error: e
+//         });
+//     }
+// };

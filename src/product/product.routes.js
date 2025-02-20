@@ -1,28 +1,29 @@
 import { Router } from "express"
 import { bestSellers, getAll, getProduct, saveProduct, stockProduct, updateProduct } from "./product.controller.js"
+import { isAdmin, validateJwt } from "../../middlewares/validate.jwt.js"
 
 
 const api = Router()
 api.post(
-    '/save', saveProduct
+    '/save', validateJwt, isAdmin, saveProduct
 )
 
 api.get(
-    '/get', getAll
+    '/get', validateJwt, getAll
 )
 
 api.get(
-    '/get/:id', getProduct
+    '/get/:id', validateJwt, getProduct
 )
 
 api.put(
-    '/update/:id', updateProduct
+    '/update/:id',validateJwt, updateProduct
 )
 
-api.get('/stockProduct', stockProduct
+api.get('/stockProduct',validateJwt, stockProduct
 
 )
 
-api.get('/bestSellers', bestSellers)
+api.get('/bestSellers',validateJwt, bestSellers)
 
 export default api

@@ -1,5 +1,6 @@
 import Product from './product.model.js'
 import Category from '../category/category.model.js'
+import User from '../user/user.model.js'
 
 export const saveProduct = async(req, res)=>{
     try {
@@ -10,7 +11,7 @@ export const saveProduct = async(req, res)=>{
             return res.status(404).send(
                 {
                 success: false,
-                message: 'Category not found'
+                message: 'Product not found'
             }
         )
         }
@@ -18,15 +19,15 @@ export const saveProduct = async(req, res)=>{
         // const user = await User.findOne(
         //     {
         //         _id: data.keeper,
-        //         role: 'ADMIN'
-        //     }
-        // )
+        //          role: 'ADMIN'
+        //      }
+        //  )
 
         // if(!user) return res.status(403).send(
         //     {
         //         success:false,
         //         message:'keeper not found or acces denied'
-        //     }
+        // }
         // )
         
         const newProduct = new Product(data)
@@ -34,7 +35,7 @@ export const saveProduct = async(req, res)=>{
         await newProduct.save()
         return res.send({
             success: true,
-            message: `Saved category`
+            message: `Saved product`
         })
         
     } catch (e) {

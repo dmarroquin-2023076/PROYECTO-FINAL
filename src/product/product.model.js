@@ -33,11 +33,11 @@ const productSchema = new Schema(
              ref: 'Category',
              required: [true, 'Category ID is required']
         },
-        // keeper:{
-        //     type:Schema.Types.ObjectId,
-        //     ref:'User',
+        // user:{
+        //      type:Schema.Types.ObjectId,
+        //      ref:'User',
         //     required:[ true, 'User ID is required']
-        // }
+        //  }
     },
     {
         versionKey: false, // Deshabilitar el __v (Versión del documento)
