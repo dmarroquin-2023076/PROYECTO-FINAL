@@ -3,15 +3,14 @@ import cors from 'cors'
 import helmet from "helmet"
 import morgan from "morgan"
 
-<<<<<<< HEAD
 import userRouter from '../src/user/user.routes.js'
 import productRoutes from '../src/product/product.routes.js'
 import categoryRoutes from '../src/category/category.routes.js'
 import authRoutes from '../src/auth/auth.routes.js'
-=======
+
 import productRoutes from '../src/product/product.routes.js'
 import categoryRoutes from '../src/category/category.routes.js'
->>>>>>> 942d1ff36ca37759fe6cb9a9dd5edc24833cdb23
+
 
 const configs = (app)=>{
     app.use(express.json())
