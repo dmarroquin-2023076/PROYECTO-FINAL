@@ -24,11 +24,9 @@ const configs = (app)=>{
 const routes = (app)=>{
     app.use('/v1/product', productRoutes)
     app.use('/v1/category', categoryRoutes)
-<<<<<<< HEAD
     app.use('/v1/user', userRouter)
     app.use('/v1',authRoutes)
-=======
->>>>>>> 942d1ff36ca37759fe6cb9a9dd5edc24833cdb23
+
 }
 
 
