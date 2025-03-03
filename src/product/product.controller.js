@@ -16,19 +16,7 @@ export const saveProduct = async(req, res)=>{
         )
         }
        
-        // const user = await User.findOne(
-        //     {
-        //         _id: data.keeper,
-        //          role: 'ADMIN'
-        //      }
-        //  )
-
-        // if(!user) return res.status(403).send(
-        //     {
-        //         success:false,
-        //         message:'keeper not found or acces denied'
-        // }
-        // )
+    
         
         const newProduct = new Product(data)
         
@@ -228,5 +216,21 @@ export const bestSellers = async(req, res)=>{
                 message:'General error',
                 e
             })
+    }
+}
+
+export const deleteProduct = async (req, res) => {
+    try {
+        let id = req.params.id
+        let deletedProduct = await Product.findByIdAndDelete(id)
+
+        if (!deletedProduct) {
+            return res.status(404).send({ message: 'Product not found, not deleted' })
+        }
+
+        return res.send({ message: 'Deleted product successfully', deletedProduct })
+    } catch (error) {
+        console.error('General Error', error)
+        return res.status(500).send({ message: 'General Error', error })
     }
 }
