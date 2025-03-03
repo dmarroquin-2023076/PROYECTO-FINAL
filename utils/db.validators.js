@@ -2,6 +2,9 @@
 
 import { isValidObjectId } from 'mongoose'
 import User from '../src/user/user.model.js'
+import Product from '../src/product/product.model.js'
+import mongoose from 'mongoose'
+
                                 //parámetro | token
 export const existUsername = async(username, user)=>{
     const alreadyUsername = await User.findOne({username})
@@ -25,11 +28,24 @@ export const notRequiredField = (field)=>{
     }
 }
 
-//Validar que sea un id
-export const objectIdValid = (objectId)=>{
-    if(!isValidObjectId(objectId)) {
-        throw new Error(`Keeper is not a valid ObjectId`)
+
+export const objectIdValid = async (req, res, next) => {
+    const { id } = req.params 
+    if (!mongoose.isValidObjectId(id)) {
+        return res.status(400).send({
+            success: false,
+            message: 'Invalid ObjectId format'
+        })
     }
+    const product = await Product.findById(id)
+    if (!product) {
+        return res.status(404).send({
+            success: false,
+            message: 'Product not found'
+        })
+    }
+
+    next() 
 }
 
 export const findUser = async(id)=>{
@@ -41,4 +57,44 @@ export const findUser = async(id)=>{
         console.error(err)
         return false
     }
+}
+
+export const validateObjectId  = (req, res, next) => {
+    const { category } = req.body 
+    if (!mongoose.isValidObjectId(category)) {
+        return res.status(400).send({
+            success: false,
+            message: 'Keeper is not a valid ObjectId'
+        })
+    }
+    next()
+}
+
+export const existProductName = async (name) => {
+    const existingProduct = await Product.findOne({ name })
+    if (existingProduct) {
+        throw new Error('Product with this name already exists')
+    }
+    return true
+}
+
+export const isValidPrice = (value) => {
+    if (value < 0) {
+        throw new Error('Price cannot be negative')
+    }
+    return true
+}
+
+export const isValidStock = (value) => {
+    if (value < 0) {
+        throw new Error('Stock cannot be negative')
+    }
+    return true
+}
+
+export const isValidCategoryId = (categoryId) => {
+    if (!mongoose.isValidObjectId(categoryId)) {
+        throw new Error('El id de la caetgoria no es valida')
+    }
+    return true
 }

@@ -52,25 +52,3 @@ export const isAdmin = async(req, res, next)=>{
         )
     }
 }
-
-export const isClient = async(req, res, next)=>{
-    try{
-        const { user } = req
-        if(!user || user.role !== 'CLIENT') return res.status(403).send(
-            {
-                success: false,
-                message: `You don't have access | username ${user.username}`
-            }
-        )
-        next()
-        
-    }catch(err){
-        console.error(err)
-        return res.status(403).send(
-            {
-                success: false,
-                message: 'Error with authorization'
-            }
-        )
-    }
-}

@@ -7,7 +7,7 @@ import {
     updatePassword,
     updateUser,  
 } from "./auth.controler.js"
-import { registerValidator, updatePasswordValidator } from "../../middlewares/validators.js"
+import { registerValidator, updatePasswordValidator, userUpdate } from "../../middlewares/validators.js"
 import { validateJwt } from "../../middlewares/validate.jwt.js"
 
 
@@ -31,7 +31,7 @@ api.put(
     updatePassword
 )
 
-api.put('/updateUser', validateJwt, updateUser)
+api.put('/updateUser', validateJwt, userUpdate,  updateUser)
 
 api.delete('/deleteUser', validateJwt, deleteUser )
 

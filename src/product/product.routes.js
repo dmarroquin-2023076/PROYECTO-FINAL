@@ -1,11 +1,12 @@
 import { Router } from "express"
 import { bestSellers, deleteProduct, getAll, getProduct, getProductsByCategory, saveProduct, searchProductsByName, stockProduct, updateProduct } from "./product.controller.js"
 import { isAdmin, validateJwt } from "../../middlewares/validate.jwt.js"
-
+import { productValidator, updateProductValidator } from "../../middlewares/validators.js"
+import { objectIdValid } from "../../utils/db.validators.js"
 
 const api = Router()
 api.post(
-    '/save', validateJwt, isAdmin, saveProduct
+    '/save', validateJwt, isAdmin,productValidator, saveProduct
 )
 
 api.get(
@@ -17,7 +18,7 @@ api.get(
 )
 
 api.put(
-    '/update/:id',validateJwt, updateProduct
+    '/update/:id',validateJwt, isAdmin, updateProductValidator,objectIdValid, updateProduct
 )
 
 api.get('/stockProduct',validateJwt, stockProduct)
@@ -26,7 +27,7 @@ api.get('/productos/categoria/:categoryName', validateJwt, getProductsByCategory
 
 api.get('/bestSellers',validateJwt, bestSellers)
 
-api.delete('/:id',validateJwt, isAdmin, deleteProduct)
+api.delete('/:id',validateJwt, isAdmin,objectIdValid, deleteProduct)
 
 api.get('/productos/buscar/:name', validateJwt, searchProductsByName)
 

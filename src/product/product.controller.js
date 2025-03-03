@@ -2,37 +2,27 @@ import Product from './product.model.js'
 import Category from '../category/category.model.js'
 
 
-export const saveProduct = async(req, res)=>{
+export const saveProduct = async (req, res) => {
     try {
         const data = req.body
-       
-        const category = await Category.findById(data.category)
-        if (!category) {
-            return res.status(404).send(
-                {
-                success: false,
-                message: 'Product not found'
-            }
-        )
-        }
-       
-    
-        
+
         const newProduct = new Product(data)
         
         await newProduct.save()
+
         return res.send({
             success: true,
-            message: `Saved product`
+            message: 'Product saved successfully',
+            product: newProduct
         })
-        
+
     } catch (e) {
         console.error(e)
         return res.status(500).send({
-                success:false,
-                message:'General error',
-                e
-            })
+            success: false,
+            message: 'General error',
+            error: e.message
+        })
     }
 }
 
