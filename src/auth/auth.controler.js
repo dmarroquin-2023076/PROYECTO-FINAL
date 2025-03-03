@@ -58,3 +58,30 @@ export const login = async(req, res)=>{
         return res.status(500).send({message: 'General error with login function', err})
     }
 }
+
+const agregarUsuarioPorDefecto = async () => {
+    try {
+        const adminExistente = await User.findOne({ role: "ADMIN" })
+
+        if (!adminExistente) {
+            const passwordHash = await encrypt("Admin1234", 10)
+
+            const usuarioAdmin = new User({
+                name: "Diego ",
+                surname: "Chupina",
+                username: "dchupina",
+                email: "dchupina-2023120@kinal.edu.gt",
+                phone: "41662867",
+                password: passwordHash,
+                role: "ADMIN",
+            })
+
+            await usuarioAdmin.save()
+            console.log("Default admin user added")
+        }
+    } catch (error) {
+        console.error("Error adding default user:", error)
+    }
+}
+
+agregarUsuarioPorDefecto()
