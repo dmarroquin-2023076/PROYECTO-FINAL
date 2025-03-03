@@ -14,7 +14,7 @@ api.get(
 )
 
 api.get(
-    '/getAll',validateJwt, isAdmin, getAll
+    '/getAll',validateJwt, getAll
 )
 
 api.put(

@@ -1,6 +1,6 @@
 import Product from './product.model.js'
 import Category from '../category/category.model.js'
-import User from '../user/user.model.js'
+
 
 export const saveProduct = async(req, res)=>{
     try {
@@ -232,5 +232,89 @@ export const deleteProduct = async (req, res) => {
     } catch (error) {
         console.error('General Error', error)
         return res.status(500).send({ message: 'General Error', error })
+    }
+}
+
+export const searchProductsByName = async (req, res) => {
+    try {
+        const { name } = req.params // Obtener el nombre del producto desde los parametros de la ruta
+
+        if (!name) {
+            return res.status(400).send({
+                success: false,
+                message: 'Product name is required'
+            })
+        }
+
+        // Buscar productos que coincidan con el nombre (usando una expresión regular)
+        const products = await Product.find({
+            name: { $regex: name, $options: 'i' } // 'i' para hacer la bqueda sin importar  mayusculas y minsculas
+        }).populate({
+            path: 'category',
+            select: 'name -_id'
+        })
+
+        if (products.length === 0) {
+            return res.status(404).send({
+                success: false,
+                message: 'No products found with that name'
+            })
+        }
+
+        return res.send({
+            success: true,
+            message: 'Products found:',
+            products
+        })
+    } catch (error) {
+        console.error('General error', error)
+        return res.status(500).send({
+            success: false,
+            message: 'General error',
+            error
+        })
+    }
+}
+
+
+export const getProductsByCategory = async (req, res) => {
+    try {
+        const { categoryName } = req.params 
+
+        
+        const category = await Category.findOne({ name: categoryName })
+
+        if (!category) {
+            return res.status(404).send({
+                success: false,
+                message: 'Category not found'
+            })
+        }
+
+        // Buscar productos que pertenecen a la categoria encontrada
+        const products = await Product.find({ category: category._id }).populate({
+            path: 'category',
+            select: 'name -_id'
+        })
+
+        if (products.length === 0) {
+            return res.status(404).send({
+                success: false,
+                message: 'No products found in this category'
+            })
+        }
+
+        return res.send({
+            success: true,
+            message: 'Products found in category:',
+            products
+        })
+    } catch (error) {
+        console.error('General error', error)
+        return res.status(500).send({
+            success: false,
+            message: 'General error',
+            error
+        })
     }
 }
