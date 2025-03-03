@@ -18,7 +18,7 @@ api.get(
 )
 
 api.put(
-    '/update/:id',validateJwt, isAdmin, updateProductValidator,objectIdValid, updateProduct
+    '/update/:id',validateJwt, isAdmin, objectIdValid,updateProductValidator, updateProduct
 )
 
 api.get('/stockProduct',validateJwt, stockProduct)

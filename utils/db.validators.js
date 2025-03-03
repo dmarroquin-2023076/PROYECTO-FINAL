@@ -3,6 +3,7 @@
 import { isValidObjectId } from 'mongoose'
 import User from '../src/user/user.model.js'
 import Product from '../src/product/product.model.js'
+import Category from '../src/category/category.model.js'
 import mongoose from 'mongoose'
 
                                 //parámetro | token
@@ -97,4 +98,27 @@ export const isValidCategoryId = (categoryId) => {
         throw new Error('El id de la caetgoria no es valida')
     }
     return true
+}
+
+export const existCategoryName = async (name) => {
+    if (!name) {
+        throw new Error('Category name is required');
+    }
+
+    const category = await Category.findOne({ name: name.trim() });
+
+    if (category) {
+        throw new Error('The category name already exists');
+    }
+}
+
+
+export const existCategoryNameU = async (name, { req }) => {
+    if (!name) return;
+
+    const category = await Category.findOne({ name: name.trim() });
+
+    if (category && category._id.toString() !== req.params.id) {
+        throw new Error('The category name already exists'); // Lanzar error correctamente
+    }
 }

@@ -1,7 +1,7 @@
 //Validar campos en las rutas
 import { body } from "express-validator"
 import { validateErrors, validateErrorsWithoutFiles } from "./validate.errors.js"
-import { existEmail, existProductName, existUsername, isValidCategoryId, isValidPrice, isValidStock, notRequiredField, objectIdValid } from "../utils/db.validators.js"
+import { existCategoryName, existCategoryNameU, existEmail, existProductName, existUsername, isValidCategoryId, isValidPrice, isValidStock, notRequiredField, objectIdValid } from "../utils/db.validators.js"
 
 //Arreglo de validaciones (por cada ruta)
 export const registerValidator = [
@@ -136,4 +136,30 @@ export const updateProductValidator = [
         .optional() // Permitir que la categoría no se envíe si no se quiere actualizar
         .custom(isValidCategoryId), // Validación personalizada para el ID de la categoría
     validateErrors // Middleware para manejar errores de validación
+]
+
+export const categoryValidator = [
+    body('name', 'Name cannot be empty')
+        .notEmpty()
+        .custom(existCategoryName),
+    body('description', 'Description cannot be empty')
+        .notEmpty()
+        .isLength({ min: 5 }).withMessage('Description must be at least 5 characters long')
+        .isLength({ max: 100 }).withMessage('Description must be at most 100 characters long'),
+    validateErrors
+]
+
+export const updateCategoryValidator = [
+    body('name')
+        .optional()
+        .notEmpty().withMessage('Name cannot be empty') // Asegura que el nombre no esté vacío si se envía
+        .custom(existCategoryNameU), // Verifica duplicados solo si se envía un nuevo nombre
+
+    body('description')
+        .optional()
+        .notEmpty().withMessage('Description cannot be empty')
+        .isLength({ min: 5 }).withMessage('Description must be at least 5 characters long')
+        .isLength({ max: 100 }).withMessage('Description must be at most 100 characters long'),
+
+    validateErrors
 ]

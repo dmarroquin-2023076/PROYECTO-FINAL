@@ -1,12 +1,12 @@
 import {Router} from "express"
 import { /*categoryDelete,*/ categoryDelete, getAll, getCategory, saveCategory, updateCategory } from "./category.controller.js"
 import { isAdmin, validateJwt } from "../../middlewares/validate.jwt.js"
-
+import { categoryValidator, updateCategoryValidator } from "../../middlewares/validators.js"
 
 const api = Router()
 
 api.post(
-    '/save',validateJwt, isAdmin, saveCategory
+    '/save',validateJwt, isAdmin,categoryValidator, saveCategory
 )
 
 api.get(
@@ -18,7 +18,7 @@ api.get(
 )
 
 api.put(
-    '/:id', validateJwt, isAdmin, updateCategory
+    '/:id', validateJwt, isAdmin, updateCategoryValidator, updateCategory
 )
 
 api.delete(
