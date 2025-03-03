@@ -1,10 +1,14 @@
 //Rutas de autenticación
 import { Router } from "express"
 import { 
+    deleteUser,
     login,
-    register,  
+    register,
+    updatePassword,
+    updateUser,  
 } from "./auth.controler.js"
-import { registerValidator } from "../../middlewares/validators.js"
+import { registerValidator, updatePasswordValidator } from "../../middlewares/validators.js"
+import { validateJwt } from "../../middlewares/validate.jwt.js"
 
 
 const api = Router()
@@ -18,7 +22,18 @@ api.post(
 
 api.post('/login', login)
 
+api.put(
+    '/updatePassword',
+    [
+        validateJwt, 
+        updatePasswordValidator
+    ], 
+    updatePassword
+)
 
+api.put('/updateUser', validateJwt, updateUser)
+
+api.delete('/deleteUser', validateJwt, deleteUser )
 
 //Exporto las rutas
 export default api

@@ -59,6 +59,54 @@ export const login = async(req, res)=>{
     }
 }
 
+export const updatePassword = async (req, res) => {
+    try {
+        const { uid } = req.user
+        const { currentPassword, newPassword } = req.body
+
+        const user = await User.findById(uid)
+        if (!user) {
+            return res.status(404).send(
+                {
+                    success: false,
+                    message: 'User  not found'
+                }
+            )
+        }
+
+        const isMatch = await checkPassword(user.password, currentPassword)
+        if (!isMatch) {
+            return res.status(400).send(
+                {
+                    success: false,
+                    message: 'Current password is incorrect'
+                }
+            )
+        }
+
+        user.password = await encrypt(newPassword)
+        const updatedUser  = await user.save()
+
+        return res.send(
+            {
+                success: true,
+                message: 'Password updated successfully',
+                user: updatedUser  
+            }
+        )
+    } catch (e) {
+        console.e(e)
+        return res.status(500).send(
+            {
+                success: false,
+                message: 'General error with update password function',
+                e
+            }   
+        )
+    }
+}
+
+
 const agregarUsuarioPorDefecto = async () => {
     try {
         const adminExistente = await User.findOne({ role: "ADMIN" })
@@ -84,4 +132,96 @@ const agregarUsuarioPorDefecto = async () => {
     }
 }
 
-agregarUsuarioPorDefecto()
+agregarUsuarioPorDefecto();
+
+export const updateUser   = async (req, res) => {
+    try {
+        const { uid } = req.user
+        const { currentPassword, ...data } = req.body
+
+        if (!currentPassword) {
+            return res.status(400).send({
+                success: false,
+                message: 'Current password is required'
+            })
+        }
+
+        const user = await User.findById(uid)
+        if (!user) {
+            return res.status(404).send({
+                success: false,
+                message: 'User  not found'
+            })
+        }
+
+        const isMatch = await checkPassword(user.password, currentPassword)
+        if (!isMatch) {
+            return res.status(400).send({
+                success: false,
+                message: 'Current password is incorrect'
+            })
+        }
+
+        delete data.role
+        delete data.password
+
+        const updatedUser   = await user.save()
+
+        return res.send({
+            success: true,
+            message: 'User  updated successfully',
+            user: updatedUser     
+        })
+    } catch (error) {
+        console.error('General error', error)
+        return res.status(500).send({
+            success: false,
+            message: 'General error with update user function',
+            error
+        })
+    }
+}
+
+export const deleteUser  = async (req, res) => {
+    try {
+        const { uid } = req.user
+        const { password } = req.body 
+        
+        if (!password) {
+            return res.status(400).send({
+                success: false,
+                message: 'Password is required to delete the account'
+            })
+        }
+
+        const user = await User.findById(uid)
+        if (!user) {
+            return res.status(404).send({
+                success: false,
+                message: 'User  not found'
+            })
+        }
+
+        const isMatch = await checkPassword(user.password, password)
+        if (!isMatch) {
+            return res.status(400).send({
+                success: false,
+                message: 'Incorrect password'
+            })
+        }
+
+        await User.findByIdAndDelete(uid)
+
+        return res.send({
+            success: true,
+            message: 'User  account deleted successfully'
+        })
+    } catch (error) {
+        console.error('General error', error)
+        return res.status(500).send({
+            success: false,
+            message: 'General error with delete user function',
+            error
+        })
+    }
+}

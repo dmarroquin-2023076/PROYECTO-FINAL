@@ -59,3 +59,17 @@ export const updateUserValidator = [
         .custom(notRequiredField),
     validateErrorsWithoutFiles 
 ]
+export const updatePasswordValidator = [
+    body('currentPassword')
+        .notEmpty().withMessage('Current password cannot be empty'),
+    body('newPassword')
+        .notEmpty().withMessage('New password cannot be empty')
+        .isStrongPassword()
+        .withMessage('New password must be strong')
+        .isLength({ min: 8 })
+        .withMessage('New password needs min characters')
+        .matches(/[a-z]/).withMessage('New password must contain at least 1 lowercase letter')
+        .matches(/[A-Z]/).withMessage('New password must contain at least 1 uppercase letter')
+        .matches(/\d/).withMessage('New password must contain at least 1 number'),
+    validateErrors 
+]
